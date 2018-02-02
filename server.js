@@ -41,6 +41,22 @@ server.auth.strategy('simple-cookie-strategy', 'cookie', {
 	isSecure: false
 })
 
+server.register({
+	register: require('./routes/user')
+}, function(err) {
+	if(err){
+		return;
+	}
+});
+
+server.register({
+	register: require('./routes/home')
+}, function(err){
+	if(err){
+		return;
+	}
+})
+
 server.route({
 	method: "GET",
 	path: "/{param*}",
@@ -51,10 +67,12 @@ server.route({
 	}
 });
 
-server.register({
-	register: require("./routes/user")
-}, function (err) {
-	if (err) {
-		return;
+server.route({
+	method: "GET",
+	path: "/user_profile_images/{param*}",
+	handler: {
+		directory: {
+			path: "user_profile_images"
+		}
 	}
-});
+})

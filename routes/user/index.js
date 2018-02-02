@@ -46,8 +46,17 @@ module.exports.register = function (server, options, next) {
                             'name': vaild_user.name
                         });
                         reply();
+                    } else {
+                        reply().code(400)
                     }
                 })
+            }
+        }, {
+            method: "POST",
+            path: "/logout",
+            handler: function(request, reply){
+                request.cookieAuth.clear();
+                reply();
             }
         }
 
