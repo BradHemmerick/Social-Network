@@ -17,7 +17,8 @@ module.exports.register = function (server, options, next) {
                         var user = new User({
                             "email": request.payload.email,
                             "name": request.payload.name,
-                            "password": request.payload.password
+                            "password": request.payload.password,
+                            "user_profile": {}
                         });
                         user.save(function (err, saved_user_record) {
                             if (err) {
@@ -28,6 +29,25 @@ module.exports.register = function (server, options, next) {
                         });
                     }
                 });
+            }
+        }, {
+            method: "POST",
+            path: "/login",
+            handler: function (request, reply) {
+                console.log("request_payload", request.payload);
+                User.findOne({
+                    "email": request.payload.email,
+                    "password": request.payload.password
+                }, function (err, vaild_user) {
+                    if (vaild_user) {
+                        request.cookieAuth.set({
+                            "user": vaild_user.email,
+                            "member_id": vaild_user.member_id,
+                            'name': vaild_user.name
+                        });
+                        reply();
+                    }
+                })
             }
         }
 

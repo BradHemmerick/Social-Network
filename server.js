@@ -34,6 +34,13 @@ server.register(require("inert"), function (err) {
 
 });
 
+server.register(require('hapi-auth-cookie'));
+server.auth.strategy('simple-cookie-strategy', 'cookie', {
+	cookie: 'node_connect_cookie',
+	password: "abcdefghabcdefghabcdefghabcdefgh",
+	isSecure: false
+})
+
 server.route({
 	method: "GET",
 	path: "/{param*}",
