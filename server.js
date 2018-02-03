@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const User = require('./database_models/user_model');
 // const node_connect_db = mongoose.connect("mongodb://localhost/node_connect")
 
-var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL ||'mongodb://localhost/node_connect';
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL ||mongoose.connect('mongodb://localhost/node_connect');
 	
 var PORT = process.env.PORT || 3000;
 
